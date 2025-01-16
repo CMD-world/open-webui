@@ -17,3 +17,7 @@ conda activate open-webui
 pip install -r requirements.txt -U
 ENV=dev WEBUI_AUTH=False ./dev.sh
 ```
+
+## Adding pipelines to Open WebUI
+
+See this video: [OpenWebUI Pipelines: Customize and Control Your Workflows](https://www.youtube.com/watch?v=DFlSd6GrMIk).
