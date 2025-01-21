@@ -1755,17 +1755,24 @@
 
 	const initChatHandler = async () => {
 		if (!$temporaryChatEnabled) {
-			chat = await createNewChat(localStorage.token, {
-				id: $chatId,
-				title: $i18n.t('New Chat'),
-				models: selectedModels,
-				system: $settings.system ?? undefined,
-				params: params,
-				history: history,
-				messages: createMessagesList(history.currentId),
-				tags: [],
-				timestamp: Date.now()
-			});
+			chat = await createNewChat(
+				localStorage.token,
+				{
+					id: $chatId,
+					title: $i18n.t('New Chat'),
+					models: selectedModels,
+					system: $settings.system ?? undefined,
+					params: params,
+					history: history,
+					messages: createMessagesList(history.currentId),
+					tags: [],
+					timestamp: Date.now()
+				},
+				{
+					platformId: $page.url.searchParams.get('platform_id'),
+					platformKey: $page.url.searchParams.get('platform_key')
+				}
+			);
 
 			currentChatPage.set(1);
 			await chats.set(await getChatList(localStorage.token, $currentChatPage));

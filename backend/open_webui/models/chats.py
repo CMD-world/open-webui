@@ -58,7 +58,7 @@ class ChatModel(BaseModel):
     folder_id: Optional[str] = None
 
     platform_key: Optional[str] = None
-    platform_id: Optional[str] = None
+    platform_id: Optional[int] = None
 
 
 ####################
@@ -68,6 +68,8 @@ class ChatModel(BaseModel):
 
 class ChatForm(BaseModel):
     chat: dict
+    platform_key: Optional[str] = None
+    platform_id: Optional[int] = None
 
 
 class ChatImportForm(ChatForm):
@@ -122,6 +124,8 @@ class ChatTable:
                     "chat": form_data.chat,
                     "created_at": int(time.time()),
                     "updated_at": int(time.time()),
+                    "platform_key": form_data.platform_key,
+                    "platform_id": form_data.platform_id,
                 }
             )
 
