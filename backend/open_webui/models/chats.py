@@ -35,6 +35,9 @@ class Chat(Base):
     meta = Column(JSON, server_default="{}")
     folder_id = Column(Text, nullable=True)
 
+    platform_key = Column(Text, nullable=True)
+    platform_id = Column(BigInteger, nullable=True)
+
 
 class ChatModel(BaseModel):
     model_config = ConfigDict(from_attributes=True)
@@ -53,6 +56,9 @@ class ChatModel(BaseModel):
 
     meta: dict = {}
     folder_id: Optional[str] = None
+
+    platform_key: Optional[str] = None
+    platform_id: Optional[str] = None
 
 
 ####################
@@ -575,8 +581,8 @@ class ChatTable:
                         | text(
                             """
                             EXISTS (
-                                SELECT 1 
-                                FROM json_each(Chat.chat, '$.messages') AS message 
+                                SELECT 1
+                                FROM json_each(Chat.chat, '$.messages') AS message
                                 WHERE LOWER(message.value->>'content') LIKE '%' || :search_text || '%'
                             )
                             """

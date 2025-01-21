@@ -30,6 +30,7 @@ from open_webui.env import (
 from open_webui.constants import ERROR_MESSAGES
 from open_webui.env import ENV, SRC_LOG_LEVELS
 
+from open_webui.models.chats import Chats
 
 from open_webui.utils.payload import (
     apply_model_params_to_body_openai,
@@ -591,7 +592,7 @@ async def generate_chat_completion(
     if prefix_id:
         payload["model"] = payload["model"].replace(f"{prefix_id}.", "")
 
-    # Add user info to the payload if the model is a pipeline
+    # Add user info and platform info to the payload if the model is a pipeline
     if "pipeline" in model and model.get("pipeline"):
         payload["user"] = {
             "name": user.name,
@@ -599,6 +600,15 @@ async def generate_chat_completion(
             "email": user.email,
             "role": user.role,
         }
+
+        chat_id = form_data["metadata"]["chat_id"]
+        chat = Chats.get_chat_by_id(chat_id)
+
+        if chat:
+            payload["platform"] = {
+                "key": chat.platform_key,
+                "id": chat.platform_id
+            }
 
     url = request.app.state.config.OPENAI_API_BASE_URLS[idx]
     key = request.app.state.config.OPENAI_API_KEYS[idx]
