@@ -1,6 +1,6 @@
 services:
   open-webui:
-    image: docker.io/svelterust/open-webui
+    image: docker.io/svelterust/open-webui:latest
     container_name: open-webui
     volumes:
       - open-webui:/app/backend/data
