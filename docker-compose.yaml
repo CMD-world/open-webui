@@ -1,6 +1,7 @@
 services:
   open-webui:
     image: docker.io/svelterust/open-webui:latest
+    pull_policy: always
     container_name: open-webui
     volumes:
       - open-webui:/app/backend/data
